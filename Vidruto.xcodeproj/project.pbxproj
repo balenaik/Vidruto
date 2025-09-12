@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A8CA1ED82E73050A001D4495 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = A8CA1ED72E73050A001D4495 /* ComposableArchitecture */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		A8CA1EBA2E6C630D001D4495 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8CA1ED82E73050A001D4495 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = Vidruto;
 			packageProductDependencies = (
+				A8CA1ED72E73050A001D4495 /* ComposableArchitecture */,
 			);
 			productName = Vidruto;
 			productReference = A8CA1EAB2E6C630C001D4495 /* Vidruto.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = A8CA1EA22E6C630C001D4495;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A8CA1ED62E73050A001D4495 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A8CA1EAC2E6C630C001D4495 /* Products */;
 			projectDirPath = "";
@@ -593,6 +602,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A8CA1ED62E73050A001D4495 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = exactVersion;
+				version = 1.22.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A8CA1ED72E73050A001D4495 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A8CA1ED62E73050A001D4495 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A8CA1EA32E6C630C001D4495 /* Project object */;
 }
