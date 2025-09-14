@@ -15,18 +15,18 @@ struct MapView: View {
     var body: some View {
         Map()
             .sheet(isPresented: $store.isSheetPresented.sending(\.didPresentSheet)) {
-                SheetView()
+                SheetView
                     .presentationDetents([.fraction(0.1), .medium, .large])
                     .presentationDragIndicator(.visible)
                     .interactiveDismissDisabled()
                     .presentationBackgroundInteraction(.enabled)
             }
     }
-}
 
-private struct SheetView: View {
-    var body: some View {
-        Spacer()
+    private var SheetView: some View {
+        VStack(spacing: 0) {
+            Spacer()
+        }
     }
 }
 
