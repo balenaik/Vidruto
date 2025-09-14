@@ -25,8 +25,22 @@ struct MapView: View {
 
     private var SheetView: some View {
         VStack(spacing: 0) {
+            SearchBar
             Spacer()
         }
+    }
+
+    private var SearchBar: some View {
+        HStack {
+            Image(systemName: SFSymbolConst.searchBarIconName)
+                .foregroundColor(.secondary)
+
+            TextField(String(localized: "mapview_searchbar_placeholder"), text: $store.searchBarText.sending(\.didUpdateSearchBarText))
+                .textFieldStyle(.plain)
+        }
+        .padding(ViewConst.margin8)
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: ViewConst.cornerRadius10))
+        .padding()
     }
 }
 
