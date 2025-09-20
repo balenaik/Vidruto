@@ -17,12 +17,13 @@ struct MapFeature {
         var sheetDetent = MapSheetDetent.collapsed.toSwiftUI
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         case didPresentSheet(_ isPresented: Bool)
-        case didUpdateSearchBarText(_ text: String)
     }
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
         Reduce { state, action in
             return .none
         }

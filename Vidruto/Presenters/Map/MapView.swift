@@ -41,7 +41,7 @@ private struct SheetView: View {
             Image(systemName: SFSymbolConst.searchBarIconName)
                 .foregroundColor(.secondary)
 
-            TextField(String(localized: "mapview_searchbar_placeholder"), text: $store.searchBarText.sending(\.didUpdateSearchBarText))
+            TextField(String(localized: "mapview_searchbar_placeholder"), text: $store.searchBarText)
                 .focused($isSearchBarFocused)
                 .textFieldStyle(.plain)
         }
