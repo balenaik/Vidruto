@@ -15,15 +15,19 @@ struct MapView: View {
     var body: some View {
         Map()
             .sheet(isPresented: $store.isSheetPresented.sending(\.didPresentSheet)) {
-                SheetView
+                SheetView(store: store)
                     .presentationDetents(Set(MapSheetDetent.allCases.map(\.toSwiftUI)), selection: $store.sheetDetent)
                     .presentationDragIndicator(.visible)
                     .interactiveDismissDisabled()
                     .presentationBackgroundInteraction(.enabled)
             }
     }
+}
 
-    private var SheetView: some View {
+private struct SheetView: View {
+    @Bindable var store: StoreOf<MapFeature>
+
+    var body: some View {
         VStack(spacing: 0) {
             SearchBar
             Spacer()
