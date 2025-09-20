@@ -24,7 +24,15 @@ struct MapFeature {
     var body: some Reducer<State, Action> {
         BindingReducer()
         Reduce { state, action in
-            return .none
+            switch action {
+            case .binding(\.isSearchBarFocused):
+                if state.isSearchBarFocused {
+                    state.sheetDetent = .large
+                }
+                return .none
+            default:
+                return .none
+            }
         }
     }
 }
