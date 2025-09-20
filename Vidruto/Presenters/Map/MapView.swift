@@ -14,7 +14,7 @@ struct MapView: View {
 
     var body: some View {
         Map()
-            .sheet(isPresented: $store.isSheetPresented.sending(\.didPresentSheet)) {
+            .sheet(isPresented: $store.isSheetPresented) {
                 SheetView(store: store)
                     .presentationDetents(Set(MapSheetDetent.allCases.map(\.toSwiftUI)), selection: $store.sheetDetent)
                     .presentationDragIndicator(.visible)

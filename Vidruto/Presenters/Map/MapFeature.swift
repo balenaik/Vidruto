@@ -19,7 +19,6 @@ struct MapFeature {
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
-        case didPresentSheet(_ isPresented: Bool)
     }
 
     var body: some Reducer<State, Action> {
