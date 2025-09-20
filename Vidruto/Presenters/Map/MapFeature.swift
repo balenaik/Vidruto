@@ -13,6 +13,7 @@ struct MapFeature {
     struct State: Equatable {
         var isSheetPresented = true
         var searchBarText = ""
+        var isSearchBarFocused = false
         var sheetDetent = MapSheetDetent.collapsed.toSwiftUI
     }
 

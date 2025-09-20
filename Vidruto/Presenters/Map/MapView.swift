@@ -26,12 +26,14 @@ struct MapView: View {
 
 private struct SheetView: View {
     @Bindable var store: StoreOf<MapFeature>
+    @FocusState var isSearchBarFocused: Bool
 
     var body: some View {
         VStack(spacing: 0) {
             SearchBar
             Spacer()
         }
+        .bind($store.isSearchBarFocused, to: $isSearchBarFocused)
     }
 
     private var SearchBar: some View {
@@ -40,6 +42,7 @@ private struct SheetView: View {
                 .foregroundColor(.secondary)
 
             TextField(String(localized: "mapview_searchbar_placeholder"), text: $store.searchBarText.sending(\.didUpdateSearchBarText))
+                .focused($isSearchBarFocused)
                 .textFieldStyle(.plain)
         }
         .padding(ViewConst.margin8)
