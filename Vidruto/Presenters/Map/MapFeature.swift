@@ -12,15 +12,27 @@ struct MapFeature {
     @ObservableState
     struct State: Equatable {
         var isSheetPresented = true
+        var searchBarText = ""
+        var isSearchBarFocused = false
+        var sheetDetent = MapSheetDetent.collapsed.toSwiftUI
     }
 
-    enum Action {
-        case didPresentSheet(_ isPresented: Bool)
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
     }
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
         Reduce { state, action in
-            return .none
+            switch action {
+            case .binding(\.isSearchBarFocused):
+                if state.isSearchBarFocused {
+                    state.sheetDetent = .large
+                }
+                return .none
+            default:
+                return .none
+            }
         }
     }
 }

@@ -14,9 +14,9 @@ struct MapView: View {
 
     var body: some View {
         Map()
-            .sheet(isPresented: $store.isSheetPresented.sending(\.didPresentSheet)) {
-                SheetView()
-                    .presentationDetents([.fraction(0.1), .medium, .large])
+            .sheet(isPresented: $store.isSheetPresented) {
+                SheetView(store: store)
+                    .presentationDetents(Set(MapSheetDetent.allCases.map(\.toSwiftUI)), selection: $store.sheetDetent)
                     .presentationDragIndicator(.visible)
                     .interactiveDismissDisabled()
                     .presentationBackgroundInteraction(.enabled)
@@ -25,8 +25,29 @@ struct MapView: View {
 }
 
 private struct SheetView: View {
+    @Bindable var store: StoreOf<MapFeature>
+    @FocusState var isSearchBarFocused: Bool
+
     var body: some View {
-        Spacer()
+        VStack(spacing: 0) {
+            SearchBar
+            Spacer()
+        }
+        .bind($store.isSearchBarFocused, to: $isSearchBarFocused)
+    }
+
+    private var SearchBar: some View {
+        HStack {
+            Image(systemName: SFSymbolConst.searchBarIconName)
+                .foregroundColor(.secondary)
+
+            TextField(String(localized: "mapview_searchbar_placeholder"), text: $store.searchBarText)
+                .focused($isSearchBarFocused)
+                .textFieldStyle(.plain)
+        }
+        .padding(ViewConst.margin8)
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: ViewConst.cornerRadius10))
+        .padding()
     }
 }
 
