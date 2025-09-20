@@ -16,7 +16,7 @@ struct MapView: View {
         Map()
             .sheet(isPresented: $store.isSheetPresented.sending(\.didPresentSheet)) {
                 SheetView
-                    .presentationDetents([.fraction(0.1), .medium, .large])
+                    .presentationDetents(Set(MapSheetDetent.allCases.map(\.toSwiftUI)), selection: $store.sheetDetent)
                     .presentationDragIndicator(.visible)
                     .interactiveDismissDisabled()
                     .presentationBackgroundInteraction(.enabled)
