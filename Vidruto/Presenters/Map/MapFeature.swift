@@ -9,6 +9,9 @@ import ComposableArchitecture
 
 @Reducer
 struct MapFeature {
+
+    // MARK: - State
+
     @ObservableState
     struct State: Equatable {
         var isSheetPresented = true
@@ -17,9 +20,13 @@ struct MapFeature {
         var sheetDetent = MapSheetDetent.collapsed.toSwiftUI
     }
 
+    // MARK: - Action
+
     enum Action: BindableAction {
         case binding(BindingAction<State>)
     }
+
+    // MARK: - Body
 
     var body: some Reducer<State, Action> {
         BindingReducer()
