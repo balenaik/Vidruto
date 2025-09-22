@@ -18,6 +18,7 @@ struct MapFeature {
         var searchBarText = ""
         var isSearchBarFocused = false
         var sheetDetent = MapSheetDetent.collapsed.toSwiftUI
+        var searchResult = [String]()
     }
 
     // MARK: - Action

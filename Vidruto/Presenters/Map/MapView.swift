@@ -31,7 +31,7 @@ private struct SheetView: View {
     var body: some View {
         VStack(spacing: 0) {
             SearchBar
-            Spacer()
+            searchResultList
         }
         .bind($store.isSearchBarFocused, to: $isSearchBarFocused)
     }
@@ -48,6 +48,15 @@ private struct SheetView: View {
         .padding(ViewConst.margin8)
         .background(.thinMaterial, in: RoundedRectangle(cornerRadius: ViewConst.cornerRadius10))
         .padding()
+    }
+
+    private var searchResultList: some View {
+        List {
+            ForEach(store.searchResult, id: \.self) { name in
+                Text(name)
+            }
+        }
+        .listStyle(.plain)
     }
 }
 
