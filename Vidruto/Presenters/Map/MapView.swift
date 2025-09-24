@@ -30,13 +30,13 @@ private struct SheetView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            SearchBar
+            searchBar
             searchResultList
         }
         .bind($store.isSearchBarFocused, to: $isSearchBarFocused)
     }
 
-    private var SearchBar: some View {
+    private var searchBar: some View {
         HStack {
             Image(systemName: SFSymbolConst.searchBarIconName)
                 .foregroundColor(.secondary)
