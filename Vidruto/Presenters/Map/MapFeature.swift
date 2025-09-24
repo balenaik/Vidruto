@@ -25,7 +25,13 @@ struct MapFeature {
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case didPressReturnOnSearchBar
+        case searchResponse(Result<[String], Error>)
     }
+
+    // MARK: - Dependency
+
+    @Dependency(\.mapSearchClient) var mapSearchClient
 
     // MARK: - Body
 
@@ -38,8 +44,30 @@ struct MapFeature {
                     state.sheetDetent = .large
                 }
                 return .none
+            case .didPressReturnOnSearchBar:
+                return searchPlaces(query: state.searchBarText)
+            case let .searchResponse(.success(places)):
+                state.searchResult = places
+                return .none
             default:
                 return .none
+            }
+        }
+    }
+}
+
+// MARK: - Search Functions
+
+private extension MapFeature {
+    func searchPlaces(query: String) -> Effect<Action> {
+        guard !query.isEmpty else { return .none }
+
+        return .run { send in
+            do {
+                let results = try await mapSearchClient.search(query)
+                await send(.searchResponse(.success(results)))
+            } catch {
+                await send(.searchResponse(.failure(error)))
             }
         }
     }

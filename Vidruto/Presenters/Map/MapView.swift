@@ -44,6 +44,9 @@ private struct SheetView: View {
             TextField(String(localized: "mapview_searchbar_placeholder"), text: $store.searchBarText)
                 .focused($isSearchBarFocused)
                 .textFieldStyle(.plain)
+                .onSubmit {
+                    store.send(.didPressReturnOnSearchBar)
+                }
         }
         .padding(ViewConst.margin8)
         .background(.thinMaterial, in: RoundedRectangle(cornerRadius: ViewConst.cornerRadius10))
