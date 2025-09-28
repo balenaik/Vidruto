@@ -30,13 +30,13 @@ private struct SheetView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            SearchBar
-            Spacer()
+            searchBar
+            searchResultList
         }
         .bind($store.isSearchBarFocused, to: $isSearchBarFocused)
     }
 
-    private var SearchBar: some View {
+    private var searchBar: some View {
         HStack {
             Image(systemName: SFSymbolConst.searchBarIconName)
                 .foregroundColor(.secondary)
@@ -44,10 +44,22 @@ private struct SheetView: View {
             TextField(String(localized: "mapview_searchbar_placeholder"), text: $store.searchBarText)
                 .focused($isSearchBarFocused)
                 .textFieldStyle(.plain)
+                .onSubmit {
+                    store.send(.didPressReturnOnSearchBar)
+                }
         }
         .padding(ViewConst.margin8)
         .background(.thinMaterial, in: RoundedRectangle(cornerRadius: ViewConst.cornerRadius10))
         .padding()
+    }
+
+    private var searchResultList: some View {
+        List {
+            ForEach(store.searchResult, id: \.self) { name in
+                Text(name)
+            }
+        }
+        .listStyle(.plain)
     }
 }
 

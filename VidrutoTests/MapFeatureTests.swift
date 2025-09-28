@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Foundation
 import Testing
 
 @testable import Vidruto
@@ -32,4 +33,56 @@ struct MapFeatureTests {
         await store.send(\.binding.isSearchBarFocused, false)
     }
 
+    @Test func whenDidPressReturnOnSearchBar_itShouldPassSearchQuery() async throws {
+        let searchQuery = LockIsolated<String?>(nil)
+
+        let store = TestStore(initialState: MapFeature.State()) {
+            MapFeature()
+        } withDependencies: {
+            $0.mapSearchClient.search = { query in
+                searchQuery.setValue(query)
+                return []
+            }
+        }
+        store.exhaustivity = .off
+
+        // Non empty case
+        var searchText = UUID().uuidString
+        await store.send(\.binding.searchBarText, searchText) {
+            $0.searchBarText = searchText
+        }
+        await store.send(\.didPressReturnOnSearchBar)
+        searchQuery.withValue {
+            #expect($0 == searchText)
+        }
+
+        // Empty case
+        searchQuery.setValue(nil)
+        searchText = ""
+        await store.send(\.binding.searchBarText, searchText) {
+            $0.searchBarText = searchText
+        }
+        await store.send(\.didPressReturnOnSearchBar)
+        searchQuery.withValue {
+            #expect($0 == nil)
+        }
+    }
+
+    @Test func onSearchResponseSuccess_itShouldUpdateSearchResult() async throws {
+        let searchResult = [UUID().uuidString, UUID().uuidString, UUID().uuidString]
+        let store = TestStore(initialState: MapFeature.State()) {
+            MapFeature()
+        } withDependencies: {
+            $0.mapSearchClient.search = { _ in return searchResult }
+        }
+
+        let searchQuery = "dummy query"
+        await store.send(\.binding.searchBarText, searchQuery) {
+            $0.searchBarText = searchQuery
+        }
+        await store.send(\.didPressReturnOnSearchBar)
+        await store.receive(\.searchResponse.success) {
+            $0.searchResult = searchResult
+        }
+    }
 }
