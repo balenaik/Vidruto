@@ -55,8 +55,8 @@ private struct SheetView: View {
 
     private var searchResultList: some View {
         List {
-            ForEach(store.searchResult, id: \.self) { name in
-                Text(name)
+            ForEach(store.searchResult, id: \.self) { mapPoint in
+                Text(mapPoint.name)
             }
         }
         .listStyle(.plain)

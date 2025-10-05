@@ -69,7 +69,11 @@ struct MapFeatureTests {
     }
 
     @Test func onSearchResponseSuccess_itShouldUpdateSearchResult() async throws {
-        let searchResult = [UUID().uuidString, UUID().uuidString, UUID().uuidString]
+        let searchResult = [
+            MapPoint(name: "A", coordinate: .init(latitude: 0.0, longitude: 0.0)),
+            MapPoint(name: "B", coordinate: .init(latitude: 0.0, longitude: 0.0)),
+            MapPoint(name: "C", coordinate: .init(latitude: 0.0, longitude: 0.0))
+        ]
         let store = TestStore(initialState: MapFeature.State()) {
             MapFeature()
         } withDependencies: {

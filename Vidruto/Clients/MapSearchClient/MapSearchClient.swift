@@ -9,7 +9,7 @@ import ComposableArchitecture
 
 @DependencyClient
 struct MapSearchClient {
-    var search: @Sendable (_ query: String) async throws -> [String]
+    var search: @Sendable (_ query: String) async throws -> [MapPoint]
 }
 
 extension DependencyValues {
