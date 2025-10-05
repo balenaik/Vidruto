@@ -69,7 +69,11 @@ struct MapFeatureTests {
     }
 
     @Test func onSearchResponseSuccess_itShouldUpdateSearchResult() async throws {
-        let searchResult = [UUID().uuidString, UUID().uuidString, UUID().uuidString]
+        let searchResult = [
+            MapPoint(name: "A", coordinate: .init(latitude: 0.0, longitude: 0.0)),
+            MapPoint(name: "B", coordinate: .init(latitude: 0.0, longitude: 0.0)),
+            MapPoint(name: "C", coordinate: .init(latitude: 0.0, longitude: 0.0))
+        ]
         let store = TestStore(initialState: MapFeature.State()) {
             MapFeature()
         } withDependencies: {
@@ -83,6 +87,21 @@ struct MapFeatureTests {
         await store.send(\.didPressReturnOnSearchBar)
         await store.receive(\.searchResponse.success) {
             $0.searchResult = searchResult
+        }
+    }
+
+    @Test func whenDIdSelectMapPoint_itShouldUpdateSelectedMapPoint() async throws {
+        let mapPoint = MapPoint(name: "A", coordinate: .init(latitude: 0.0, longitude: 0.0))
+        let store = TestStore(initialState: MapFeature.State()) {
+            MapFeature()
+        }
+
+        await store.send(\.binding.sheetDetent, .large) {
+            $0.sheetDetent = .large
+        }
+        await store.send(\.didTapSearchResultItem, mapPoint) {
+            $0.sheetDetent = .medium
+            $0.selectedPoint = mapPoint
         }
     }
 }
