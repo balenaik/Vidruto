@@ -54,8 +54,10 @@ private struct SheetView: View {
     }
 
     private var searchResultList: some View {
-        List {
-            ForEach(store.searchResult, id: \.self) { mapPoint in
+        List(store.searchResult) { mapPoint in
+            Button {
+                store.send(.didTapSearchResultItem(mapPoint))
+            } label: {
                 Text(mapPoint.name)
             }
         }

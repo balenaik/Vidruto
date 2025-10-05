@@ -89,4 +89,19 @@ struct MapFeatureTests {
             $0.searchResult = searchResult
         }
     }
+
+    @Test func whenDIdSelectMapPoint_itShouldUpdateSelectedMapPoint() async throws {
+        let mapPoint = MapPoint(name: "A", coordinate: .init(latitude: 0.0, longitude: 0.0))
+        let store = TestStore(initialState: MapFeature.State()) {
+            MapFeature()
+        }
+
+        await store.send(\.binding.sheetDetent, .large) {
+            $0.sheetDetent = .large
+        }
+        await store.send(\.didTapSearchResultItem, mapPoint) {
+            $0.sheetDetent = .medium
+            $0.selectedPoint = mapPoint
+        }
+    }
 }

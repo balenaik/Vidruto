@@ -19,6 +19,7 @@ struct MapFeature {
         var isSearchBarFocused = false
         var sheetDetent = MapSheetDetent.collapsed.toSwiftUI
         var searchResult = [MapPoint]()
+        var selectedPoint: MapPoint?
     }
 
     // MARK: - Action
@@ -27,6 +28,7 @@ struct MapFeature {
         case binding(BindingAction<State>)
         case didPressReturnOnSearchBar
         case searchResponse(Result<[MapPoint], Error>)
+        case didTapSearchResultItem(MapPoint)
     }
 
     // MARK: - Dependency
@@ -48,6 +50,10 @@ struct MapFeature {
                 return searchPlaces(query: state.searchBarText)
             case let .searchResponse(.success(places)):
                 state.searchResult = places
+                return .none
+            case .didTapSearchResultItem(let mapPoint):
+                state.selectedPoint = mapPoint
+                state.sheetDetent = MapSheetDetent.medium.toSwiftUI
                 return .none
             default:
                 return .none
